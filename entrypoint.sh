@@ -8,4 +8,4 @@ python3 init.py
 
 # cat /etc/bind/example.com.zone
 
-/usr/sbin/named -f -g
+/usr/sbin/named -f -g -4 -d 1
