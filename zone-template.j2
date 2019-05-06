@@ -1,0 +1,18 @@
+$TTL	{{ ttl | default('3600') }} ; 24 hours could have been written as 24h or 1d
+$ORIGIN {{ name }}.
+@ IN SOA ns1.{{name}}. do-not-send.{{ name }}. (
+			      2002022401 ; serial
+			      3H ; refresh
+			      15 ; retry
+			      1w ; expire
+			      3h ; nxdomain ttl
+                 )
+
+{% for dns_server_ip in dns_servers %}
+    IN NS ns{{ loop.index }}.{{ name }}.
+ns{{ loop.index }}  IN A {{ dns_server_ip }}
+{% endfor %}
+
+{% for record in records %}
+{{ record.name }} IN {{ record.type }} {{ record.value }}
+{% endfor %}

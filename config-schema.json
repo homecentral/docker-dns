@@ -1,0 +1,119 @@
+{
+    "definitions": {},
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://homcentral.github.io/dns.json",
+    "type": "object",
+    "title": "HomeCentral/DNS Configuration",
+    "required": [
+        "zones"
+    ],
+    "properties": {
+        "dns_servers": {
+            "$id": "#/properties/dns_servers",
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "$id": "#/properties/forwarders/dns_servers",
+                "type": "ipv4",
+                "examples": [
+                    "192.168.1.32",
+                    "192.168.1.33"
+                ]
+            }
+        },
+        "forwarders": {
+            "$id": "#/properties/forwarders",
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 2,
+            "items": {
+                "$id": "#/properties/forwarders/items",
+                "type": "ipv4",
+                "examples": [
+                    "8.8.8.8",
+                    "8.8.4.4"
+                ]
+            }
+        },
+        "zones": {
+            "$id": "#/properties/zones",
+            "type": "array",
+            "title": "The Zones Schema",
+            "items": {
+                "$id": "#/properties/zones/items",
+                "type": "object",
+                "title": "The Items Schema",
+                "required": [
+                    "name",
+                    "records"
+                ],
+                "properties": {
+                    "name": {
+                        "$id": "#/properties/zones/items/properties/name",
+                        "type": "string",
+                        "title": "The Name Schema",
+                        "default": "",
+                        "examples": [
+                            "example.com"
+                        ],
+                        "pattern": "^(.*)$"
+                    },
+                    "ttl": {
+                        "$id": "#/properties/zones/items/properties/name",
+                        "type": "integer",
+                        "default": "3600",
+                        "examples": [
+                            "7200"
+                        ]
+                    },
+                    "records": {
+                        "$id": "#/properties/zones/items/properties/records",
+                        "type": "array",
+                        "title": "The Records Schema",
+                        "items": {
+                            "oneOf": [
+                                {
+                                    "$id": "#/properties/zones/items/properties/records/items/A",
+                                    "type": "object",
+                                    "title": "A Record",
+                                    "required": [
+                                        "name",
+                                        "type",
+                                        "value"
+                                    ],
+                                    "properties": {
+                                        "name": {
+                                            "$id": "#/properties/zones/items/properties/records/items/properties/name",
+                                            "type": "string",
+                                            "default": "",
+                                            "examples": [
+                                                "my"
+                                            ],
+                                            "pattern": "^([-_a-z0-9]+)$"
+                                        },
+                                        "type": {
+                                            "$id": "#/properties/zones/items/properties/records/items/properties/type",
+                                            "type": "string",
+                                            "examples": [
+                                                "A"
+                                            ],
+                                            "enum":["A"]
+                                        },
+                                        "value": {
+                                            "$id": "#/properties/zones/items/properties/records/items/properties/value",
+                                            "type": "string",
+                                            "default": "",
+                                            "examples": [
+                                                "192.168.1.2"
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
