@@ -19,9 +19,9 @@ try:
         if('zones' in config_data):
             for zone in config_data['zones']:
                 zone['dns_servers'] = config_data['dns_servers']
-                
+
                 print("Generating config for zone", zone["name"])
-                execute_template(zone, '/zone-template.j2', f'/etc/bind/{ zone["name"] }.zone')
+                execute_template(zone, '/zone-template.j2', f'/var/bind/{ zone["name"] }.zone')
 
 except FileNotFoundError:
      print(YAML_PATH, "not found, please mount the config file to", TARGET_PATH)
